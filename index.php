@@ -15,6 +15,9 @@
      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
      crossorigin="anonymous" 
      referrerpolicy="no-referrer" />
+
+    <!-- css file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- navbar -->
@@ -22,7 +25,7 @@
         <!-- first child -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Mangan</a>
+    <img src="./Logo/Mangan.png" alt="" class="logo">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -64,6 +67,76 @@
     </div>
   </div>
 </nav>
+
+<!-- second child -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+<ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="#">Welcome</a>
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" href="#">Login</a>
+  </li>
+</ul>
+</nav>
+<!-- third child -->
+ <div class="bg-light">
+  <h3 class="text-center">Meal Plans</h3>
+  <p class="text-center">Diet Made Simple and Straighforward</p>
+ </div>
+<!-- fourth child -->
+<div class="container">
+  <div class="row justify-content-center">
+    <!--meals-->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- last child -->
+ <div class="bg-info p-3 text-center bg-body-tertiary">
+  <p> All rights reserved © Designed by Chris-2025</p>
+ </div>
      </div>
 
 
