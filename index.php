@@ -1,5 +1,5 @@
 <?php
-include ('./includes/connect.php');
+include ('connect.php');
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ include ('./includes/connect.php');
         <!-- first child -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-custom">
             <div class="container-fluid">
-                <img src="./Logo/Mangan.png" alt="" class="logo">
+                <img src="../logo/Mangan.png" alt="" class="logo">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,7 +52,7 @@ include ('./includes/connect.php');
         <!-- second child -->
         <div class="bg-light">
             <h3 class="text-center">Our Meals</h3>
-            <p class="text-center">Healthy meals your way, with a diet made simple.</p>
+            <p class="text-center mb-4">Healthy meals your way, with a diet made simple.</p>
         </div>
 
         <!-- fourth child -->
@@ -68,7 +68,7 @@ include ('./includes/connect.php');
                         echo '
                         <div class="col-md-3">
                             <div class="card">
-                                <img src="./Logo/' . $row['image'] . '" class="card-img-top" alt="' . $row['name'] . '">
+                                <img src="../logo/' . $row['image'] . '" class="card-img-top" alt="' . $row['name'] . '">
                                 <div class="card-body">
                                     <h5 class="card-title">' . $row['name'] . '</h5>
                                     <p class="card-text">' . $row['description'] . '</p>
@@ -87,6 +87,10 @@ include ('./includes/connect.php');
                 ?>
             </div>
         </div>
+        <!-- last child -->
+ <div class="bg-info p-3 text-center bg-body-tertiary">
+  <p> All rights reserved © Designed by Chris-2025</p>
+ </div>
     </div>
 
     <!-- bootstrap js -->

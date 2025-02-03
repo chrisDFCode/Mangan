@@ -1,5 +1,5 @@
 <?php
-include ('./includes/connect.php');
+include ('connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $menu_id = $_POST['menu_id'];

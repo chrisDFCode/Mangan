@@ -11,3 +11,6 @@ index.php
 includes/connect.php
 cart.php
 index.php
+add_to_cart.php
+*.php
+add_to_cart.php
