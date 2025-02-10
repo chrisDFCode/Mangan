@@ -1,5 +1,5 @@
 <?php
-include ('./includes/connect.php');
+include ('connect.php');
 
 $response = array();
 

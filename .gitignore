@@ -14,3 +14,10 @@ index.php
 add_to_cart.php
 *.php
 add_to_cart.php
+*.php
+index.php
+update_cart.php
+remove_from_cart.php
+index.php
+checkout.php
+add_to_cart.php

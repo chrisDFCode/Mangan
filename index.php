@@ -1,5 +1,12 @@
 <?php
+session_start();
 include ('connect.php');
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signin.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,31 +33,45 @@ include ('connect.php');
     <!-- navbar -->
     <div class="container-fluid p-0">
         <!-- first child -->
-        <nav class="navbar navbar-expand-lg navbar-custom text-center">
+      <nav class="navbar navbar-expand-lg navbar-custom text-center">
             <div class="container-fluid">
-                 <img src="../logo/Mangan.png" alt="" class="" style="width: 25%; height: 26%; margin-bottom: -45px; margin-top: -55px; margin-right: -13%; margin-left: 3px;">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                       <li class="nav-item text-center">
-                            <a class="nav-link active" aria-current="page" href="index.php" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Menu</a>
-                        </li>
-                        <li class="nav-item text-center">
-                            <a class="nav-link" href="cart.php" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Cart</a>
-                        </li>
-                        <li class="nav-item text-center">
-                            <a class="nav-link" href="" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Contact Us</a>
-                        </li>
+            <img src="../logo/Mangan.png" alt="" class="" href = "index.php" style="width: 25%; height: 26%; margin-bottom: -45px; margin-top: -55px; margin-right: -8%; margin-left: 3px;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item text-center">
+                    <a class="nav-link active" aria-current="page" href="index.php" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Menu</a>
+                </li>
+                <li class="nav-item text-center">
+                    <a class="nav-link" href="cart.php" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Cart</a>
+                </li>
+                <li class="nav-item text-center">
+                    <a class="nav-link" href= "https://www.instagram.com/mangan_bychriss?igsh=amJuNW9yZXNmajR1&utm_source=qr" target="_blank" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">Contact Us</a>
+                </li>
+                <!-- Update the Profile Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem;">
+                        <i class="fas fa-user"></i> <?php echo htmlspecialchars($_SESSION['username']); ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> My Account</a></li>
+                        <li><a class="dropdown-item" href="order_history.php"><i class="fas fa-history"></i> Order History</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>
-                    <form class="d-flex" role="search" method="GET" action="index.php" style="width: 600px; margin-left: 1%; margin-right: 1%;">
-                        <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem; height: 38px;">
-                    </form>
+                </li>
+                </ul>
+                <form class="d-flex ms-3" role="search" method="GET" action="index.php" style="margin-left: 1%; margin-right: 1%;">
+                <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" style="color: #473c39; font-family: 'Arial', sans-serif; font-size: 1rem; height: 38px;">
+                </form>
+            </div>
+            </div>
+        </nav>
                 </div>
             </div>
         </nav>
-
         <!-- second child -->
         <div class="mt-4">
             <h3 class="text-center" style="font-weight: bold; font-family: 'Arial', sans-serif; color: #473c31; margin-bottom: 3px;">Our Meals</h3>
@@ -75,9 +96,9 @@ include ('connect.php');
                                     <h5 class="card-title">' . $row['name'] . '</h5>
                                     <p class="card-text">' . $row['description'] . '</p>
                                     <p class="card-text">Price: ' . $row['price'] . ' Pesos</p>
-                                    <form method="POST" class="add-to-cart-form">
+                                    <form method="POST" class="add-to-cart-form" >
                                         <input type="hidden" name="menu_id" value="' . $row['id'] . '">
-                                        <button type="submit" class="btn" style="background-color: #473c39; color: white;">Add</button>
+                                        <button type="submit" class="btn" style="background-color: #473c39; color: white; font-size: .5 rem;">Add to Cart</button>
                                     </form>
                                 </div>
                             </div>

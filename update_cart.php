@@ -9,9 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $action = $_POST['action'];
 
         if ($action == 'increase') {
-            $sql = "UPDATE cart SET quantity = quantity + 1 WHERE id = $cart_id";
+            $sql = "UPDATE cart SET quantity = quantity + 1 WHERE id = ?";
         } elseif ($action == 'decrease') {
-            $sql = "UPDATE cart SET quantity = quantity - 1 WHERE id = $cart_id AND quantity > 1";
+            $sql = "UPDATE cart SET quantity = quantity - 1 WHERE id = ? AND quantity > 1";
         } else {
             $response['status'] = 'error';
             $response['message'] = 'Invalid action.';
@@ -19,13 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
 
-        if ($conn->query($sql) === TRUE) {
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $cart_id);
+
+        if ($stmt->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Cart updated successfully.';
         } else {
             $response['status'] = 'error';
-            $response['message'] = "Error: " . $sql . "<br>" . $conn->error;
+            $response['message'] = "Error: " . $stmt->error;
         }
+
+        $stmt->close();
     } else {
         $response['status'] = 'error';
         $response['message'] = 'Missing cart_id or action.';
