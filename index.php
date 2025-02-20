@@ -28,6 +28,140 @@ if (!isset($_SESSION['user_id'])) {
     referrerpolicy="no-referrer" />
     <!-- css file -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        .card {
+            height: auto;  /* Change from fixed height to auto */
+            min-height: 550px;  /* Set minimum height instead */
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(71, 60, 57, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            height: 300px;  /* Increased height from 200px to 300px */
+            object-fit: cover;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #473c39;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #473c39;
+            /* Limit description to 3 lines */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-text {
+            font-weight: bold;
+            color: #473c39;
+            margin: 1rem 0;
+        }
+
+        .quantity-section {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .quantity-label {
+            margin-right: 10px;
+            color: #473c39;
+            font-family: Arial, sans-serif;
+        }
+
+        .quantity-input {
+            text-align: center;
+            color: #473c39;
+            font-family: Arial, sans-serif;
+            width: 40px !important;  /* Reduced width */
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+        /* Remove up/down arrows for Chrome, Safari, Edge, Opera */
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-group.quantity-group {
+            width: 100px;  /* Adjusted width */
+            display: inline-flex;
+        }
+
+        .quantity-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            color: #473c39;
+            border-color: #473c39;
+            background-color: white;
+        }
+
+        .quantity-btn:hover {
+            background-color: #473c39;
+            color: white;
+        }
+
+        .btn-custom {
+            background-color: #473c39;
+            color: white;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #362e26;
+        }
+
+        /* Add media query for mobile devices */
+        @media (max-width: 768px) {
+            .card {
+                min-height: auto;  /* Remove minimum height on mobile */
+                height: 100%;     /* Take full height of container */
+            }
+
+            .card-body {
+                padding: 1rem;    /* Reduce padding on mobile */
+            }
+
+            .card-img-top {
+                height: 200px;    /* Reduce image height on mobile */
+            }
+
+            .add-to-cart-form {
+                margin-top: auto; /* Push form to bottom */
+                padding-top: 1rem;
+            }
+
+            .quantity-section {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- navbar -->
@@ -89,16 +223,28 @@ if (!isset($_SESSION['user_id'])) {
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo '
-                        <div class="col-md-3 mb-4">
+                        <div class="col-md-3">
                             <div class="card">
-                                <img src="../logo/' . $row['image'] . '" class="card-img-top" alt="' . $row['name'] . '">
+                                <img src="../logo/' . htmlspecialchars($row['image']) . '" class="card-img-top" alt="' . htmlspecialchars($row['name']) . '">
                                 <div class="card-body">
-                                    <h5 class="card-title">' . $row['name'] . '</h5>
-                                    <p class="card-text">' . $row['description'] . '</p>
-                                    <p class="card-text">Price: ' . $row['price'] . ' Pesos</p>
-                                    <form method="POST" class="add-to-cart-form" >
+                                    <div>
+                                        <h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>
+                                        <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
+                                        <p class="price-text">Price: ' . number_format($row['price'], 2) . ' Pesos</p>
+                                    </div>
+                                    <form method="POST" class="add-to-cart-form">
+                                        <div class="quantity-section">
+                                            <span class="quantity-label">Quantity:</span>
+                                            <div class="input-group quantity-group">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn" data-action="decrease">-</button>
+                                                <input type="number" class="form-control quantity-input" 
+                                                       id="quantity-' . $row['id'] . '" 
+                                                       name="quantity" value="1" min="1" max="10" readonly>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn" data-action="increase">+</button>
+                                            </div>
+                                        </div>
                                         <input type="hidden" name="menu_id" value="' . $row['id'] . '">
-                                        <button type="submit" class="btn" style="background-color: #473c39; color: white; font-size: .5 rem;">Add to Cart</button>
+                                        <button type="submit" class="btn btn-custom">Add to Cart</button>
                                     </form>
                                 </div>
                             </div>
@@ -123,6 +269,19 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Quantity selector functionality
+            $('.quantity-btn').click(function() {
+                const input = $(this).closest('.input-group').find('.quantity-input');
+                const currentVal = parseInt(input.val());
+                
+                if ($(this).data('action') === 'increase') {
+                    if (currentVal < 10) input.val(currentVal + 1);
+                } else {
+                    if (currentVal > 1) input.val(currentVal - 1);
+                }
+            });
+
+            // Existing add to cart functionality
             $('.add-to-cart-form').on('submit', function(e) {
                 e.preventDefault();
                 var form = $(this);
