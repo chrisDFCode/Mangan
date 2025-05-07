@@ -1,9 +1,10 @@
 <?php
 session_start();
-include ('connect.php');
+include('connect.php');
+include('security.php');
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
+// Simple login check
+if (!Security::isLoggedIn()) {
     header("Location: signin.php");
     exit();
 }
@@ -161,11 +162,29 @@ if (!isset($_SESSION['user_id'])) {
                 margin-bottom: 0.5rem;
             }
         }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        .footer {
+            margin-top: auto;
+            width: 100%;
+            background-color: var(--bs-tertiary-bg);
+            padding: 1rem 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <!-- navbar -->
-    <div class="container-fluid p-0">
+    <!-- Navbar -->
+    <div class="content-wrapper">
         <!-- first child -->
       <nav class="navbar navbar-expand-lg navbar-custom text-center">
             <div class="container-fluid">
@@ -256,11 +275,12 @@ if (!isset($_SESSION['user_id'])) {
                 ?>
             </div>
         </div>
-        <!-- last child -->
- <div class="bg-info p-3 text-center bg-body-tertiary">
-  <p> All rights reserved © Designed by Chris-2025</p>
- </div>
     </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="mb-0">All rights reserved © Designed by Chris-2025</p>
+    </footer>
 
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
@@ -289,11 +309,16 @@ if (!isset($_SESSION['user_id'])) {
                     type: 'POST',
                     url: 'add_to_cart.php',
                     data: form.serialize(),
+                    dataType: 'json',
                     success: function(response) {
-                        alert('Item added to cart successfully.');
+                        if (response.status === 'success') {
+                            alert(response.message);
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
                     },
                     error: function() {
-                        alert('Failed to add item to cart.');
+                        alert('Failed to add item to cart');
                     }
                 });
             });
